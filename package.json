@@ -4,8 +4,8 @@
   "description": "Application to be used in conjunction with its matching Docker image as an init container to retrieve and prepare Directus extensions",
   "main": "index.js",
   "scripts": {
-	"dev": "nodemon --config nodemon.json src/index.ts",
-	"build": "tsc"
+    "dev": "nodemon --config nodemon.json src/index.ts",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -23,9 +23,15 @@
   },
   "homepage": "https://github.com/V1210N/directus-extensions-installer#readme",
   "devDependencies": {
+    "@types/yauzl": "^2.9.2",
     "nodemon": "^2.0.12",
     "ts-node": "^10.2.1",
     "tsconfig-paths": "^3.11.0",
     "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@types/follow-redirects": "^1.13.1",
+    "follow-redirects": "^1.14.4",
+    "yauzl": "^2.10.0"
   }
 }

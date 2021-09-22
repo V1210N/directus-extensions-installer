@@ -3,3 +3,6 @@ node_modules
 
 # Builds
 dist
+
+# Downloaded extensions
+tmp/*
