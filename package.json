@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --config nodemon.json src/index.ts",
-    "build": "tsc"
+    "build": "rm -rf ./dist && tsc && babel ./src --out-dir ./dist --extensions \".ts,.js\""
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,10 @@
   },
   "homepage": "https://github.com/V1210N/directus-extensions-installer#readme",
   "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-typescript": "^7.15.0",
     "@types/yamljs": "^0.2.31",
     "@types/yauzl": "^2.9.2",
     "nodemon": "^2.0.12",
