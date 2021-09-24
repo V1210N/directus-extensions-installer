@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/V1210N/directus-extensions-installer#readme",
   "devDependencies": {
+    "@types/yamljs": "^0.2.31",
     "@types/yauzl": "^2.9.2",
     "nodemon": "^2.0.12",
     "ts-node": "^10.2.1",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@types/follow-redirects": "^1.13.1",
     "follow-redirects": "^1.14.4",
+    "yamljs": "^0.3.0",
     "yauzl": "^2.10.0"
   }
 }

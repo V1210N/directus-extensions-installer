@@ -1,11 +1,13 @@
 import yauzl from "yauzl"
 import fs from "fs"
+import path from "path"
 import { DOWNLOAD_PATH } from "download"
+import { ExtensionType } from "read"
 
-export const EXTRACT_PATH = "tmp/extracted"
+export const EXTENSIONS_PATH = process.env.NODE_ENV === "production" ? "/directus/extensions" : "tmp/extensions"
 
-export const extractZip = (filename: string): Promise<void> => {
-	console.log("starting extraction")
+export const extractZip = (filename: string, type: ExtensionType): Promise<void> => {
+	const extractPath = `${EXTENSIONS_PATH}/${type + "s"}/${path.parse(filename).name}`
 
 	return new Promise((resolve, reject) => {
 		yauzl.open(`${DOWNLOAD_PATH}/${filename}`, { lazyEntries: true }, (err, zipfile) => {
@@ -18,17 +20,17 @@ export const extractZip = (filename: string): Promise<void> => {
 				return
 			}
 
+			// Create a directory to host the extraction
+			fs.mkdirSync(extractPath)
+
 			zipfile.readEntry()
 			zipfile.on("end", () => resolve())
 			zipfile.on("entry", (entry) => {
-				// Create a directory to host the extraction
-				fs.mkdirSync(filename)
-
 				// If it's a directory, create it and queue its files.
 				// Else, it's a file, so extract it.
 				if (/\/$/.test(entry.fileName)) {
 					// Create the directory so we don't try to create its files without it existing.
-					fs.mkdirSync(`${EXTRACT_PATH}/${entry.fileName}`)
+					fs.mkdirSync(`${extractPath}/${entry.fileName}`)
 
 					// Directory file names end with '/'.
 					// Note that entries for directories themselves are optional.
@@ -49,7 +51,7 @@ export const extractZip = (filename: string): Promise<void> => {
 							zipfile.readEntry();
 						});
 
-						const file = fs.createWriteStream(`${EXTRACT_PATH}/${entry.fileName}`, { mode: 777 })
+						const file = fs.createWriteStream(`${extractPath}/${entry.fileName}`, { mode: 777 })
 
 						readStream.pipe(file)
 					})
