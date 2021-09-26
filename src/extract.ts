@@ -1,8 +1,8 @@
 import yauzl from "yauzl"
 import fs from "fs"
 import path from "path"
-import { DOWNLOAD_PATH } from "download"
-import { ExtensionType } from "read"
+import { DOWNLOAD_PATH } from "./download"
+import { ExtensionType } from "./read"
 
 export const EXTENSIONS_PATH = process.env.NODE_ENV === "production" ? "/directus/extensions" : "tmp/extensions"
 

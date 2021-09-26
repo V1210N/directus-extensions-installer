@@ -15,7 +15,8 @@ export const ReadConfig = () : Promise<ExtensionItem[]> => {
 	return new Promise((resolve) => {
 		yamljs.load(CONFIG_PATH, (result) => {
 			if (!result) {
-				throw new Error(`failed to read extensions yaml file at ${CONFIG_PATH}`)
+				console.log(`failed to read extensions yaml file at ${CONFIG_PATH}`)
+				resolve([])
 			}
 
 			resolve(result as ExtensionItem[])

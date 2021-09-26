@@ -1,10 +1,10 @@
 import { https } from "follow-redirects"
 import fs from "fs"
 import crypto from "crypto"
-import { ExtensionItem } from "read"
+import { ExtensionItem } from "./read"
 
 // Use repository folder for development and root /tmp/ folder for production.
-export const DOWNLOAD_PATH = process.env.NODE_ENV === "production" ? "tmp/downloads" : "/tmp/downloads" 
+export const DOWNLOAD_PATH = process.env.NODE_ENV === "production" ? "/tmp/downloads" : "tmp/downloads" 
 
 const SUPPORTED_EXTENSIONS = ["zip"]
 
