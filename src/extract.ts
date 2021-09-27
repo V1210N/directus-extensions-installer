@@ -7,7 +7,7 @@ import { ExtensionType } from "./read"
 export const EXTENSIONS_PATH = process.env.NODE_ENV === "production" ? "/directus/extensions" : "tmp/extensions"
 
 export const extractZip = (filename: string, type: ExtensionType): Promise<void> => {
-	const extractPath = `${EXTENSIONS_PATH}/${type + "s"}/${path.parse(filename).name}`
+	const extractPath = `${EXTENSIONS_PATH}/${type + "s"}/${path.parse(filename).name.replace(".", "")}`
 
 	return new Promise((resolve, reject) => {
 		yauzl.open(`${DOWNLOAD_PATH}/${filename}`, { lazyEntries: true }, (err, zipfile) => {

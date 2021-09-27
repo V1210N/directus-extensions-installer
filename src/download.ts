@@ -14,6 +14,8 @@ export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
 
 	const octokit = new Octokit({
 		auth: ext.token,
+		baseUrl: 'https://api.github.com',
+		userAgent: "directus-extensions-installer"
 	})
 
 	return new Promise((resolve, reject) =>
@@ -30,15 +32,14 @@ export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
 				repo: ext.repo,
 				asset_id: assetId,
 				headers: {
-					"accept": "application/octet-stream",
-					"user-agent": "directus extensions installer"
+					"accept": "application/octet-stream"
 				}
 			}).then(file => {
 				if (!file.headers["content-disposition"]) return reject(`failed to read content-disposition in release for extension ${ext.name}`)
 
 				const contentDisposition = file.headers["content-disposition"].toString().split(";")
-				let fileExtension : string | undefined = undefined
-				
+				let fileExtension: string | undefined = undefined
+
 				for (let i = 0; i < contentDisposition.length; i++) {
 					if (contentDisposition[i].includes("filename=")) {
 						fileExtension = path.extname(contentDisposition[i].split("=")[1].trim())
@@ -58,7 +59,7 @@ export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
 						resolve(filename)
 					}
 				)
-			})
-		})
+			}).catch(e => reject(`failed to download asset file for ${ext.name}: ` + e))
+		}).catch(e => reject(`failed to get release for ${ext.name} by tag: ` + e))
 	)
 }
