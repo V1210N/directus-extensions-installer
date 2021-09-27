@@ -37,11 +37,14 @@ export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
 				if (!file.headers["content-disposition"]) return reject(`failed to read content-disposition in release for extension ${ext.name}`)
 
 				const contentDisposition = file.headers["content-disposition"].toString().split(";")
-				let fileExtension = contentDisposition.find(fragment => {
-					if (fragment.includes("filename=")) {
-						return path.extname(fragment.split("=")[1].trim())
+				let fileExtension : string | undefined = undefined
+				
+				for (let i = 0; i < contentDisposition.length; i++) {
+					if (contentDisposition[i].includes("filename=")) {
+						fileExtension = path.extname(contentDisposition[i].split("=")[1].trim())
+						break
 					}
-				})
+				}
 
 				if (!fileExtension) return reject(`invalid content-disposition received for extension ${ext.name}. Received ${fileExtension}, filename extension must be one of: ${SUPPORTED_EXTENSIONS.join(",")}`)
 
