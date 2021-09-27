@@ -5,6 +5,7 @@ node_modules
 dist
 
 # Downloaded extensions
+tmp/downloads/*
 tmp/extensions/modules/*
 tmp/extensions/interfaces/*
 tmp/extensions/display/*

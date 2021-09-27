@@ -7,7 +7,7 @@ import { ExtensionsArray, ReadConfig } from "./read";
 /*
 	Since this code is run before Directus is initialized, the folders might not be in place, so we'll create them if they don't already exist.
 */
-if (!fs.existsSync("/directus")) {
+if (process.env.NODE_ENV === "production" && !fs.existsSync("/directus")) {
 	fs.mkdirSync("/directus")
 	fs.mkdirSync("/directus/extensions")
 }
@@ -29,7 +29,7 @@ ReadConfig().then(async extensions => {
 				.catch(e => console.error(e))
 		)
 	).finally(() => {
-		cleanFolder(DOWNLOAD_PATH)
-		if (process.env.NODE_ENV !== "production") cleanFolder(EXTENSIONS_PATH)
+		// cleanFolder(DOWNLOAD_PATH)
+		// if (process.env.NODE_ENV !== "production") cleanFolder(EXTENSIONS_PATH)
 	})
 })

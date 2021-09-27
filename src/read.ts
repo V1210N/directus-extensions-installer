@@ -6,7 +6,9 @@ export type ExtensionType = typeof ExtensionsArray[number]
 export interface ExtensionItem {
 	name: string
 	type: ExtensionType
-	url: string
+	repo: string
+	owner: string
+	token?: string
 }
 
 const CONFIG_PATH = "/extensions-config/extensions.yaml"
