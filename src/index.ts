@@ -29,7 +29,7 @@ ReadConfig().then(async extensions => {
 				.catch(e => console.error(e))
 		)
 	).finally(() => {
-		// cleanFolder(DOWNLOAD_PATH)
-		// if (process.env.NODE_ENV !== "production") cleanFolder(EXTENSIONS_PATH)
+		cleanFolder(DOWNLOAD_PATH)
+		if (process.env.NODE_ENV !== "production") cleanFolder(EXTENSIONS_PATH)
 	})
 })
