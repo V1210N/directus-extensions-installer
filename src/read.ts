@@ -11,13 +11,13 @@ export interface ExtensionItem {
 	token?: string
 }
 
-const CONFIG_PATH = "/extensions-config/extensions.yaml"
+const EXTENSIONS_CONFIG_FILE = process.env.EXTENSIONS_CONFIG_FILE ?? "/extensions-config/extensions.yaml"
 
 export const ReadConfig = () : Promise<ExtensionItem[]> => {
 	return new Promise((resolve) => {
-		yamljs.load(CONFIG_PATH, (result) => {
+		yamljs.load(EXTENSIONS_CONFIG_FILE, (result) => {
 			if (!result) {
-				console.log(`failed to read extensions yaml file at ${CONFIG_PATH}`)
+				console.log(`failed to read extensions yaml file at ${EXTENSIONS_CONFIG_FILE}`)
 				resolve([])
 			}
 

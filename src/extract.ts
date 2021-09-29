@@ -3,8 +3,8 @@ import fs from "fs"
 import path from "path"
 import { DOWNLOAD_PATH } from "./download"
 import { ExtensionType } from "./read"
+import { EXTENSIONS_PATH } from "."
 
-export const EXTENSIONS_PATH = process.env.NODE_ENV === "production" ? "/directus/extensions" : "tmp/extensions"
 
 export const extractZip = (filename: string, type: ExtensionType): Promise<void> => {
 	const extractPath = `${EXTENSIONS_PATH}/${type + "s"}/${path.parse(filename).name.replace(".", "")}`

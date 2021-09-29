@@ -5,7 +5,7 @@ import { Octokit } from "@octokit/rest"
 import { ExtensionItem } from "./read"
 
 // Use repository folder for development and root /tmp/ folder for production.
-export const DOWNLOAD_PATH = process.env.NODE_ENV === "production" ? "/tmp/downloads" : "tmp/downloads"
+export const DOWNLOAD_PATH = process.env.EXTENSIONS_DOWNLOAD_PATH ?? "/tmp/downloads"
 
 const SUPPORTED_EXTENSIONS = [".zip"]
 
