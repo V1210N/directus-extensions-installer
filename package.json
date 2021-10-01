@@ -1,8 +1,7 @@
 {
   "name": "directus-extensions-installer",
   "version": "1.0.0",
-  "description": "Application to be used in conjunction with its matching Docker image as an init container to retrieve and prepare Directus extensions",
-  "main": "index.js",
+  "description": "Tool for installing extensions on Directus. Useful for installing extensions in pods in Kubernetes using the Directus image",
   "scripts": {
     "dev": "nodemon --config nodemon.json src/index.ts",
     "build": "browserify --node src/index.ts -p [ tsify --noImplicitAny] > dist/bundle.js && cd dist && tar -czvf bundle.tar.gz ."

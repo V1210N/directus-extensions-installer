@@ -1,27 +1,15 @@
 import { cleanFolder } from "./cleanup";
-import { downloadFile, DOWNLOAD_PATH } from "./download";
+import { downloadFile } from "./download";
 import { extractZip } from "./extract";
 import fs from "fs"
-import { ExtensionsArray, ReadConfig } from "./read";
+import { ReadConfig } from "./read";
 
 export const DIRECTUS_DIR = process.env.DIRECTUS_DIR ?? "/directus"
-export const EXTENSIONS_PATH = `${DIRECTUS_DIR}/extensions`
+export const EXTENSIONS_DIR = `${DIRECTUS_DIR}/extensions`
+export const DOWNLOAD_DIR = process.env.EXTENSIONS_DOWNLOAD_DIR ?? "./downloads"
+export const EXTENSIONS_CONFIG_FILE = process.env.EXTENSIONS_CONFIG_FILE ?? "./extensions.yaml"
 
-/*
-	Since this code is run before Directus is initialized, the folders might not be in place, so we'll create them if they don't already exist.
-*/
-// Create Directus dir and extensions folder if these haven't already been initialized.
-if (!fs.existsSync(DIRECTUS_DIR)) fs.mkdirSync(DIRECTUS_DIR)
-if (!fs.existsSync(`${DIRECTUS_DIR}/extensions`)) fs.mkdirSync(`${DIRECTUS_DIR}/extensions`)
-
-// Create a folder for each extension type
-ExtensionsArray.forEach(extensionType => {
-	const extensionFolderPath = `${EXTENSIONS_PATH}/${extensionType + "s"}`
-	if (!fs.existsSync(extensionFolderPath)) fs.mkdirSync(extensionFolderPath)
-})
-// Create a folder for the downloads folder
-if (!fs.existsSync(DOWNLOAD_PATH)) fs.mkdirSync(DOWNLOAD_PATH)
-/* */
+if (!fs.existsSync(DOWNLOAD_DIR)) fs.mkdirSync(DOWNLOAD_DIR)
 
 ReadConfig().then(async extensions => {
 	Promise.all(
@@ -34,7 +22,9 @@ ReadConfig().then(async extensions => {
 				.catch(e => console.error(e))
 		)
 	).finally(() => {
-		cleanFolder(DOWNLOAD_PATH)
-		if (process.env.NODE_ENV !== "production") cleanFolder(EXTENSIONS_PATH)
+		cleanFolder(DOWNLOAD_DIR)
+		fs.rmdirSync(DOWNLOAD_DIR)
+
+		if (process.env.NODE_ENV !== "production") cleanFolder(EXTENSIONS_DIR)
 	})
 })

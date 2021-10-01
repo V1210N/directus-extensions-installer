@@ -3,9 +3,7 @@ import path from "path"
 import crypto from "crypto"
 import { Octokit } from "@octokit/rest"
 import { ExtensionItem } from "./read"
-
-// Use repository folder for development and root /tmp/ folder for production.
-export const DOWNLOAD_PATH = process.env.EXTENSIONS_DOWNLOAD_PATH ?? "/tmp/downloads"
+import { DOWNLOAD_DIR } from "."
 
 const SUPPORTED_EXTENSIONS = [".zip"]
 
@@ -52,7 +50,7 @@ export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
 				const filename = `${ext.name}-${crypto.randomBytes(20).toString("hex")}.${fileExtension}`
 
 				fs.appendFile(
-					`${DOWNLOAD_PATH}/${filename}`,
+					`${DOWNLOAD_DIR}/${filename}`,
 					Buffer.from(file.data as unknown as ArrayBuffer),
 					(err) => {
 						if (err) return reject(`failed to save downloaded file for ${ext.name}: ` + err)
