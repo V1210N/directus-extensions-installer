@@ -10,7 +10,7 @@ container:
         - sh
         - -c
     args:
-        - CONFIG_FILE=/path/to/extensions.yaml npx directus-extensions-installer &&
+        - npx directus-extensions-installer install &&
           npx directus bootstrap && npx directus start;
 ```
 
@@ -20,14 +20,15 @@ Configuration for this tool is given in the form of environment variables for in
 
 `npx directus-extensions-installer`
 
-You may also specify environment variables in the command line if you wish to override the defaults without setting environment variables.
+You may also specify options in the command line if you wish to override the defaults without setting environment variables.
 
-### Values
-| ENV          | DESCRIPTION                                                                                                     | DEFAULT           |
-|--------------|-----------------------------------------------------------------------------------------------------------------|-------------------|
-| DIRECTUS_DIR | Indicates the Directus installation directory. This variable is used to find out where to extract downloads to. | /directus         |
-| EXTENSIONS_CONFIG_FILE  | Points to the .yaml file which includes the extensions' specifications.                                         | ./extensions.yaml |
-| DOWNLOAD_DIR | Directory to download the extensions to. If it doesn't exist, it'll be created. This is deleted after use.                                                                        | ./downloads       |
+
+| OPTION         | DESCRIPTION                                                                                                     | DEFAULT           |
+|----------------|-----------------------------------------------------------------------------------------------------------------|-------------------|
+| --directus-dir | Indicates the Directus installation directory. This variable is used to find out where to extract downloads to. | /directus         |
+| --download-dir | Directory to download the extensions to. If it doesn't exist, it'll be created. This is deleted after use.      | ./downloads       |
+| --config       | Points to the .yaml file which includes the extensions' specifications.                                         | ./extensions.yaml |
+| --keepConfig       | Determines whether the configuration file will be kept after the operations. This is because they may contain sensitive information, like tokens.      | false |
 
 &nbsp;  
 If you wish to download a release from an extension repository located at https://github.com/foo/bar-extension, then you'd use an `extensions.yaml` that looked like so:
@@ -56,7 +57,3 @@ YAML config file model:
 - Only downloads the latest release of the specified extension; no way to specify a tag.
 - If run more than once it will install duplicates.
 - Does not check for duplicates in extensions.yaml.
-- Takes in arguments via environment values rather than command arguments.
-
-### Recommendations
-- Delete your extensions.yaml after usage if it has a Github token.

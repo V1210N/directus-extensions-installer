@@ -1,12 +1,15 @@
 {
   "name": "directus-extensions-installer",
-  "version": "1.0.7",
+  "version": "1.0.7b",
   "description": "Tool for installing extensions on Directus. Useful for installing extensions in pods in Kubernetes using the Directus image",
   "main": "./dist/bundle.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "nodemon --config nodemon.json src/index.ts",
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "tsc"
   },
   "bin": "cli.js",
   "repository": {
