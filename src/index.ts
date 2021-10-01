@@ -2,7 +2,7 @@ import { cleanFolder } from "./cleanup";
 import { downloadFile } from "./download";
 import { extractZip } from "./extract";
 import fs from "fs"
-import { ReadConfig } from "./read";
+import { ExtensionsArray, ReadConfig } from "./read";
 
 export const DIRECTUS_DIR = () => process.env.DIRECTUS_DIR ?? "/directus"
 export const EXTENSIONS_DIR = () => `${DIRECTUS_DIR()}/extensions`
@@ -11,6 +11,12 @@ export const CONFIG_FILE = () => process.env.CONFIG_FILE ?? "./extensions.yaml"
 
 const main = async (): Promise<void> => {
 	if (!fs.existsSync(DOWNLOAD_DIR())) fs.mkdirSync(DOWNLOAD_DIR())
+
+	// Prepare the folder if it doesn't yet have the proper extensions' folders.
+	ExtensionsArray.forEach(extension => {
+		const pathname = `${DIRECTUS_DIR()}/extensions/${extension + "s"}`
+		if (!fs.existsSync(pathname)) fs.mkdirSync(pathname)
+	})
 
 	return new Promise((resolve, reject) =>
 		ReadConfig()
@@ -31,7 +37,7 @@ const main = async (): Promise<void> => {
 
 					if (process.env.KEEP_CONFIG !== "true" && process.env.KEEP_CONFIG === "production") {
 						console.log("removing extensions config file")
-						
+
 						// May contain sensitive data like auth tokens so we get rid of it afterwards.
 						fs.unlinkSync(CONFIG_FILE())
 					}
