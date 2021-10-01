@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 
-export const cleanFolder = (folderpath: string) => {
+export const cleanFolder = (folderpath: string, deleteDir?: boolean) => {
 	console.log(`cleaning up files at ${folderpath}`)
 
 	fs.readdir(folderpath, (err, records) => {
@@ -10,5 +10,7 @@ export const cleanFolder = (folderpath: string) => {
 		records.forEach(record =>
 			fs.rmSync(path.join(folderpath, record), { recursive: true, force: true })
 		)
+
+		if (deleteDir) fs.rmdirSync(folderpath)
 	})
 }

@@ -50,7 +50,7 @@ export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
 				const filename = `${ext.name}-${crypto.randomBytes(20).toString("hex")}.${fileExtension}`
 
 				fs.appendFile(
-					`${DOWNLOAD_DIR}/${filename}`,
+					`${DOWNLOAD_DIR()}/${filename}`,
 					Buffer.from(file.data as unknown as ArrayBuffer),
 					(err) => {
 						if (err) return reject(`failed to save downloaded file for ${ext.name}: ` + err)

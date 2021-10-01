@@ -1,11 +1,14 @@
 {
   "name": "directus-extensions-installer",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "Tool for installing extensions on Directus. Useful for installing extensions in pods in Kubernetes using the Directus image",
+  "main": "./dist/bundle.js",
   "scripts": {
     "dev": "nodemon --config nodemon.json src/index.ts",
-    "build": "browserify --node src/index.ts -p [ tsify --noImplicitAny] > dist/bundle.js && cd dist && tar -czvf bundle.tar.gz ."
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
+  "bin": "cli.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/V1210N/directus-extensions-installer.git"
@@ -24,7 +27,6 @@
   "devDependencies": {
     "@types/yamljs": "^0.2.31",
     "@types/yauzl": "^2.9.2",
-    "browserify": "^17.0.0",
     "nodemon": "^2.0.12",
     "ts-node": "^10.2.1",
     "tsify": "^5.0.4",

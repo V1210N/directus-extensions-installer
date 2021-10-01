@@ -5,10 +5,10 @@ import { DOWNLOAD_DIR, EXTENSIONS_DIR } from "./index"
 import { ExtensionType } from "./read"
 
 export const extractZip = (filename: string, type: ExtensionType): Promise<void> => {
-	const extractPath = `${EXTENSIONS_DIR}/${type + "s"}/${path.parse(filename).name.replace(".", "")}`
+	const extractPath = `${EXTENSIONS_DIR()}/${type + "s"}/${path.parse(filename).name.replace(".", "")}`
 
 	return new Promise((resolve, reject) => {
-		yauzl.open(`${DOWNLOAD_DIR}/${filename}`, { lazyEntries: true }, (err, zipfile) => {
+		yauzl.open(`${DOWNLOAD_DIR()}/${filename}`, { lazyEntries: true }, (err, zipfile) => {
 			if (err) {
 				reject(`an error occurred while opening file ${filename}. ` + err)
 				return
