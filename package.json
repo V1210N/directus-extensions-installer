@@ -1,6 +1,6 @@
 {
   "name": "directus-extensions-installer",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Tool for installing extensions on Directus. Useful for installing extensions in pods in Kubernetes using the Directus image",
   "main": "./dist/bundle.js",
   "files": [

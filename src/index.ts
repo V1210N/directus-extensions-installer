@@ -2,7 +2,7 @@ import { cleanFolder } from "./cleanup";
 import { downloadFile } from "./download";
 import { extractZip } from "./extract";
 import fs from "fs"
-import { ExtensionsArray, ReadConfig } from "./read";
+import { EXTENSIONS_ARRAY, ReadConfig } from "./read";
 
 export const DIRECTUS_DIR = () => process.env.DIRECTUS_DIR ?? "/directus"
 export const EXTENSIONS_DIR = () => `${DIRECTUS_DIR()}/extensions`
@@ -13,7 +13,7 @@ const main = async (): Promise<void> => {
 	if (!fs.existsSync(DOWNLOAD_DIR())) fs.mkdirSync(DOWNLOAD_DIR())
 
 	// Prepare the folder if it doesn't yet have the proper extensions' folders.
-	ExtensionsArray.forEach(extension => {
+	EXTENSIONS_ARRAY.forEach(extension => {
 		const pathname = `${DIRECTUS_DIR()}/extensions/${extension + "s"}`
 		if (!fs.existsSync(pathname)) fs.mkdirSync(pathname)
 	})

@@ -10,7 +10,7 @@ container:
         - sh
         - -c
     args:
-        - npx directus-extensions-installer install &&
+        - npx directus-extensions-installer install;
           npx directus bootstrap && npx directus start;
 ```
 
@@ -31,7 +31,7 @@ You may also specify options in the command line if you wish to override the def
 | --keepConfig       | Determines whether the configuration file will be kept after the operations. This is because they may contain sensitive information, like tokens.      | false |
 
 &nbsp;  
-If you wish to download a release from an extension repository located at https://github.com/foo/bar-extension, then you'd use an `extensions.yaml` that looked like so:
+If you wish to download a release from an extension repository located at https://github.com/foo/bar-extension, then you'd use an `extensions.yaml` that would look like so:
 
 ```
 - name: extension-name
