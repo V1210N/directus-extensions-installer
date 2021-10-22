@@ -59,4 +59,4 @@ YAML config file model:
 - Does not check for duplicates in extensions.yaml.
 
 # Observations
-- If your Github permission tokens are invalid, it'll throw an error stating that it was not found (instead of saying that you are unauthorized), so make sure your token is valid.
+- If your Github permission tokens are invalid, it'll throw an error stating that the asset was not found (instead of saying that you are unauthorized), so make sure your token is valid.
