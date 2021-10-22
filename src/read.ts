@@ -10,6 +10,7 @@ export interface ExtensionItem {
 	repo: string
 	owner: string
 	token?: string
+	tag?: string
 }
 
 export const ReadConfig = (): Promise<ExtensionItem[]> => {

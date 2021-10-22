@@ -4,7 +4,7 @@ import { extractZip } from "./extract";
 import fs from "fs"
 import { EXTENSIONS_ARRAY, ReadConfig } from "./read";
 
-export const DIRECTUS_DIR = () => process.env.DIRECTUS_DIR ?? "/directus"
+export const DIRECTUS_DIR = () => process.env.DIRECTUS_DIR ?? process.env.NODE_ENV === "production" ? "/directus" : "."
 export const EXTENSIONS_DIR = () => `${DIRECTUS_DIR()}/extensions`
 export const DOWNLOAD_DIR = () => process.env.DOWNLOAD_DIR ?? "./downloads"
 export const CONFIG_FILE = () => process.env.CONFIG_FILE ?? "./extensions.yaml"
@@ -30,12 +30,13 @@ const main = async (): Promise<void> => {
 							)
 							.catch(e => reject(e))
 					)
-				).finally(() => {
+				)
+				.finally(() => {
 					cleanFolder(DOWNLOAD_DIR(), true)
 
 					if (process.env.NODE_ENV !== "production") cleanFolder(EXTENSIONS_DIR())
 
-					if (process.env.KEEP_CONFIG !== "true" && process.env.KEEP_CONFIG === "production") {
+					if (process.env.KEEP_CONFIG !== "true" && process.env.NODE_ENV === "production") {
 						console.log("removing extensions config file")
 
 						// May contain sensitive data like auth tokens so we get rid of it afterwards.
@@ -49,3 +50,8 @@ const main = async (): Promise<void> => {
 	)
 }
 export default main
+
+
+if (require.main === module) {
+	main()
+}

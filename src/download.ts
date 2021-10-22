@@ -8,7 +8,9 @@ import { DOWNLOAD_DIR } from "."
 const SUPPORTED_EXTENSIONS = [".zip"]
 
 export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
-	console.log(`downloading extension: ${ext.name}`)
+	ext.tag = ext.tag ?? "latest"
+
+	console.log(`downloading extension ${ext.name} by tag ${ext.tag}`)
 
 	const octokit = new Octokit({
 		auth: ext.token,
@@ -20,7 +22,7 @@ export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
 		octokit.repos.getReleaseByTag({
 			owner: ext.owner,
 			repo: ext.repo,
-			tag: "latest",
+			tag: ext.tag as string,
 		}).then(response => {
 			const assetId = response.data.assets.find(item => item.id !== undefined && item.id > 0)?.id
 			if (!assetId) return reject(`failed to find asset ID for extension ${ext.name}`)
@@ -58,6 +60,6 @@ export const downloadFile = async (ext: ExtensionItem): Promise<string> => {
 					}
 				)
 			}).catch(e => reject(`failed to download asset file for ${ext.name}: ` + e))
-		}).catch(e => reject(`failed to get release for ${ext.name} by tag: ` + e))
+		}).catch(e => reject(`failed to get release for ${ext.name} by tag ${ext.tag}: ` + e))
 	)
 }

@@ -4,8 +4,13 @@ node_modules
 # Builds
 dist
 
-# Downloaded extensions
-tmp/downloads/*
-tmp/extensions/modules/*
-tmp/extensions/interfaces/*
-tmp/extensions/display/*
+# Extensions config for testing
+extensions.yaml
+
+## Keep these folders but not their contents
+downloads/*
+!downloads
+
+extensions/*
+!extensions
+##
